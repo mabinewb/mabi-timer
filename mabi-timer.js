@@ -1,6 +1,6 @@
 function get_sailtime() {
     let now = new Date();
-    let sailtime = new Date("Sun Jan 02 2022 03:30:23 GMT+0900");
+    let sailtime = new Date("Sun Jan 02 2022 03:30:29 GMT+0900"); //time.bora.net 기준
     while(sailtime.getTime() - 30*1000 < now.getTime())
         sailtime.setTime(sailtime.getTime() + 11*60*1000);
     return sailtime
