@@ -1,0 +1,32 @@
+#container{
+    display: flex;
+    align-items: center;
+    width: fit-content;
+    padding: 0.5em;
+    background-color: #E0E0E0;
+}
+#left{
+    font-weight: bold;
+    line-height: 1.8em;
+    float: left;
+    width: 1.5em;
+}
+#right{
+    float: right;
+    width: fit-content;
+}
+#now, #nextsail, #remain {
+    font-weight: bold;
+}
+.orange{
+    color: darkorange;
+}
+.red{
+    color: red;
+}
+.iria{
+    color: green;
+}
+.belfast{
+    color: darkslateblue;
+}

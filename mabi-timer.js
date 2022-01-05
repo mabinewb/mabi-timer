@@ -1,28 +1,48 @@
-function get_sailtime() {
+function get_sailtime(mod = 11) {
+    let firstsail = "Sun Jan 02 2022 04:25:29 GMT+0900";
     let now = new Date();
-    let sailtime = new Date("Sun Jan 02 2022 03:30:29 GMT+0900"); //time.bora.net 기준
+    let sailtime = new Date(firstsail); //time.bora.net 기준
     while(sailtime.getTime() - 30*1000 < now.getTime())
-        sailtime.setTime(sailtime.getTime() + 11*60*1000);
+        sailtime.setTime(sailtime.getTime() + mod*60*1000);
     return sailtime
 }
 
-function erin(time){
-    mils = (time.getTime() - new Date(moment(time).format("YYYY-MM-DD 00:00:00.0000")).getTime());
-    erinmils = mils / 36 * 24 * 60;
-    return moment(erinmils).utc().format("에린 시간 : hh:mm:ss");
+function erin(time, diff = 0){
+    time = new Date(time.getTime() + diff*1000);
+    let mils = (time.getTime() - new Date(time.format("yyyy-mm-dd 00:00:00.0000")).getTime());
+    let erinmils = mils / 36 * 24 * 60;
+    return new Date(erinmils).format("UTC:HH:MM:ss");
 }
 
 function update_clock(){
+    let clocktype = document.querySelector("#clocktype");
     let now = new Date();
-    let sailtime = get_sailtime();
-    let remain = moment.duration(sailtime.getTime() - now.getTime());
-    document.querySelector("#now").innerHTML = moment(now).format("현재 시각 : YY-MM-DD hh:mm:ss");
-    document.querySelector("#nowerin").innerHTML = erin(now);
-    document.querySelector("#nextsail").innerHTML = moment(sailtime).format("다음 출항 : YY-MM-DD hh:mm:ss");
-    document.querySelector("#erintime").innerHTML = erin(sailtime);
-    document.querySelector("#remain").innerHTML = "출항까지 남은 시간 : " + remain.minutes() + "분 " + remain.seconds() + "초";
+    let sailtime = clocktype.value == "iria" ? get_sailtime() : get_sailtime(6);
+    let remain = sailtime.getTime() - now.getTime();
+    if(remain <= 60*1000){
+        document.querySelector("#remain").className = "red";
+    } else if(remain <= 120*1000){
+        document.querySelector("#remain").className = "orange";
+    } else {
+        document.querySelector("#remain").className = "";
+    }
+    let remain_min = parseInt(remain / 1000 / 60);
+    let remain_sec = parseInt(remain / 1000 % 60);
+    document.querySelector("#left").innerHTML = clocktype.value == "iria" ? "이리아" : "벨바스트";
+    document.querySelector("#left").className = clocktype.value == "iria" ? "iria" : "belfast";
+    document.querySelector("#now").innerHTML = "현재 시간 : " + now.format("yy-mm-dd HH:MM:ss");
+    document.querySelector("#nowerin").innerHTML = "(현재 에린 시간 : " + erin(now) + ")";
+    document.querySelector("#nextsail").innerHTML = "다음 출항 시간 : " + sailtime.format("yy-mm-dd HH:MM:ss");
+    document.querySelector("#erintime").innerHTML = "(출항 에린 시간 : " + erin(sailtime) + ")";
+    document.querySelector("#erintime_arrival").innerHTML = "(도착 에린 시간 : " + (clocktype.value == "iria" ? erin(sailtime, 4 * 60) : erin(sailtime, 2 * 60)) + ")";
+    document.querySelector("#remain").innerHTML = "출항까지 남은 시간 : " + (remain_min == 0 ? "" : remain_min + "분 ") + remain_sec + "초";
 }
 
-function onload(){
+function start_clock(){
     setInterval(update_clock, 100);
+}
+
+function change(){
+    let clocktype = document.querySelector("#clocktype");
+    clocktype.value = clocktype.value == "iria" ? "belfast" : "iria";
 }

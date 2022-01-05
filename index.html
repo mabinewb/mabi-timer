@@ -7,15 +7,24 @@
     <title>그냥 시계</title>
     <link rel="stylesheet" href="mabi-timer.css">
     <script src="mabi-timer.js"></script>
-    <script src="moment.min.js"></script>
+    <script src="date.format.js"></script>
 </head>
 
-<body onload="onload()">
-    <div id="now"></div>
-    <div id="nowerin"></div>
-    <div id="nextsail"></div>
-    <div id="erintime"></div>
-    <div id="remain"></div>
+<body onload="start_clock()">
+    <div id="wrap">
+        <input type="hidden" id="clocktype" value="iria">
+        <div id="container" onclick="change()">
+            <div id="left">이리아</div>
+            <div id="right">
+                <div id="now"></div>
+                <div id="nowerin"></div>
+                <div id="nextsail"></div>
+                <div id="erintime"></div>
+                <div id="erintime_arrival"></div>
+                <div id="remain"></div>
+            </div>
+        </div>
+    </div>
 </body>
 
 </html>
