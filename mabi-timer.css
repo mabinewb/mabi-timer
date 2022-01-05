@@ -2,12 +2,13 @@
     display: flex;
     align-items: center;
     width: fit-content;
-    padding: 0.5em;
+    border: 0.3em #E0E0E0 solid;
+    padding: 0.2em;
     background-color: #E0E0E0;
 }
 #left{
     font-weight: bold;
-    line-height: 1.8em;
+    line-height: 1.7em;
     float: left;
     width: 1.5em;
 }
@@ -18,10 +19,22 @@
 #now, #nextsail, #remain {
     font-weight: bold;
 }
-.orange{
+@keyframes blink_orange { 
+    50% { border-color: darkorange; } 
+}
+@keyframes blink_red { 
+    50% { border-color: red; } 
+}
+#container.orange{
+    animation: blink_orange .75s step-end infinite alternate;
+}
+#container.orange > div > #remain{
     color: darkorange;
 }
-.red{
+#container.red{
+    animation: blink_red .3s step-end infinite alternate;
+}
+#container.red > div > #remain{
     color: red;
 }
 .iria{
