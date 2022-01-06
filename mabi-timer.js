@@ -1,4 +1,4 @@
-function get_sailtime(firstsail = "Sun Jan 02 2022 04:25:29 GMT+0900", mod = 11) {
+function get_sailtime(firstsail = "2022-01-06 15:57:51 GMT+0900", mod = 11) {
     let now = new Date();
     let sailtime = new Date(firstsail); //time.bora.net 기준
     while(sailtime.getTime() - 30*1000 < now.getTime())
@@ -16,7 +16,7 @@ function erin(time, diff = 0){
 function update_clock(){
     let clocktype = document.querySelector("#clocktype");
     let now = new Date();
-    let sailtime = clocktype.value == "iria" ? get_sailtime() : get_sailtime("Sun Jan 02 2022 04:24:59 GMT+0900", 6);
+    let sailtime = clocktype.value == "iria" ? get_sailtime() : get_sailtime("2022-01-06 15:56:52 GMT+0900", 6);
     let remain = sailtime.getTime() - now.getTime();
     if(remain <= 60*1000){
         document.querySelector("#container").className = "red";
