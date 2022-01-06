@@ -1,4 +1,4 @@
-function get_sailtime(firstsail = "2022-01-06 15:57:51 GMT+0900", mod = 11) {
+function get_sailtime(firstsail = "2022-01-06 15:58:22 GMT+0900", mod = 11) {
     let now = new Date();
     let sailtime = new Date(firstsail); //time.bora.net 기준
     while(sailtime.getTime() - 30*1000 < now.getTime())
